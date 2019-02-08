@@ -23,10 +23,8 @@ def is_valid(pair):
 
 
 def interleave(a, b):
-    ret = ''
-    for ai, bi in zip(a, b):
-        ret += ai + bi
-    return ret + a[-1]
+    ret = [ai + bi for ai, bi in zip(a, b)]
+    return "".join(ret) + a[-1]
 
 
 def equation(pair, ops):
