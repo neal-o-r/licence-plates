@@ -34,7 +34,7 @@ def all_eqn(s):
     all_ops = map(join, mapcat(permute_w_space, ops))
 
     all_fills = [fill_slots(s, o) for o in all_ops]
-    return all_fills
+    return set(all_fills)
 
 
 def apply_rpn(s):
