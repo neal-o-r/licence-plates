@@ -1,6 +1,6 @@
-from itertools import combinations_with_replacement
-from operator import add, mul, sub, truediv
-from rpn import rpn
+from itertools import combinations_with_replacement, permutations
+from toolz import mapcat
+from rpn import rpn, NotValidEqnError
 
 
 """
@@ -10,6 +10,8 @@ It also solves a slight variant on the problem,
 it tries to find an eqn which can be made == 0,
 which is a little easier e.g. 1137 = (1-1)*3*7 = 0
 """
+
+join = lambda x: "".join(x)
 
 def numtostring(n):
     ns = str(n)
@@ -22,12 +24,16 @@ def numtostring(n):
 def fill_slots(s, v):
     vi = iter(v)
     ret = [next(vi) if si is "_" else si for si in s]
-    return "".join(ret).replace(" ", "")
+    return join(ret).replace(" ", "")
 
 
 def all_eqn(s):
-    ops = combinations_with_replacement("+-/* ", s.count("_"))
-    all_fills = [fill_slots(s, o) for o in ops]
+    ops = map(join, combinations_with_replacement("+-/*", s.count("_") - 1))
+
+    permute_w_space = lambda x: permutations(x + " ")
+    all_ops = map(join, mapcat(permute_w_space, ops))
+
+    all_fills = [fill_slots(s, o) for o in all_ops]
     return all_fills
 
 

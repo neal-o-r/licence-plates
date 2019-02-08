@@ -1,3 +1,5 @@
+from operator import add, sub, mul, truediv
+
 class NotValidEqnError(BaseException):
     pass
 
