@@ -11,7 +11,7 @@ it tries to find an eqn which can be made == 0,
 which is a little easier e.g. 1137 = (1-1)*3*7 = 0
 """
 
-join = lambda x: "".join(x)
+join = "".join
 
 def numtostring(n):
     ns = str(n)
