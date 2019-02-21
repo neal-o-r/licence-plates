@@ -33,16 +33,16 @@ def all_eqn(s):
     permute_w_space = lambda x: permutations(x + " ")
     all_ops = map(join, mapcat(permute_w_space, ops))
 
-    all_fills = [fill_slots(s, o) for o in all_ops]
-    return set(all_fills)
+    all_fills = {fill_slots(s, o) for o in all_ops}
+    return all_fills
 
 
-def apply_rpn(s):
+def is_valid_rpn(s):
     try:
-        return rpn(s)
+        return rpn(s) == 0.
     except NotValidEqnError:
-        return None
+        return False
 
 
 def valid_solutions(n):
-    return list(filter(lambda x: apply_rpn(x) == 0.0, all_eqn(numtostring(n))))
+    return list(filter(lambda x: is_valid_rpn(x), all_eqn(numtostring(n))))
