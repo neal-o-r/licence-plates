@@ -1,4 +1,3 @@
-from itertools import combinations_with_replacement, product
 from toolz import mapcat
 from itertools import combinations_with_replacement, product
 
@@ -33,13 +32,16 @@ def equation(pair, ops):
     return interleave(lhs, op_lhs), interleave(rhs, op_rhs)
 
 
-def all_equations(pair):
+def all_ops(pair):
     lhs, rhs = pair
     ops = "+-*/"
     lhs_ops = combinations_with_replacement(ops, len(lhs)-1)
     rhs_ops = combinations_with_replacement(ops, len(rhs)-1)
+    return product(lhs_ops, rhs_ops)
 
-    return [equation(pair, (lo, ro)) for lo, ro in product(lhs_ops, rhs_ops)]
+
+def all_equations(pair):
+    return [equation(pair, (lo, ro)) for lo, ro in all_ops(pair)]
 
 
 def check_range(n_max):
